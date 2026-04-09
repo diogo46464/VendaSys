@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.educandoweb.VendaSys.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;  // ← ADICIONE ESTA IMPORTAÇÃO
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,12 +37,15 @@ public class Order implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "client_id")
+	@JsonIgnore  // ← ADICIONE ESTA LINHA
 	private User client;
 	
 	@OneToMany(mappedBy = "id.order")
+	@JsonIgnore  // ← ADICIONE ESTA LINHA
 	private Set<OrderItem> items = new HashSet<>();
 	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	@JsonIgnore  // ← ADICIONE ESTA LINHA
 	private Payment payment;
 
 	public Order() {
@@ -73,7 +77,10 @@ public class Order implements Serializable {
 	}
 
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.valueOf(orderStatus);
+	    if (orderStatus == null || orderStatus == 0) {
+	        return OrderStatus.WAITING_PAYMENT;
+	    }
+	    return OrderStatus.valueOf(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
@@ -128,5 +135,4 @@ public class Order implements Serializable {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
