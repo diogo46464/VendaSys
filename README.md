@@ -36,6 +36,48 @@ Sistema de vendas desenvolvido com **Spring Boot** e **PostgreSQL**, seguindo as
 git clone https://github.com/diogo46464/VendaSys.git
 cd VendaSys
 
+
+Configure o arquivo .env
+
+
+
+bash
+cp .env.example .env
+Suba o banco de dados
+
+
+
+bash
+docker run --name meu-postgres -e POSTGRES_DB=meubanco -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=123456 -p 5432:5432 -d postgres:latest
+Execute a aplicação
+
+
+
+bash
+./mvnw spring-boot:run
+Acesse a API
+
+
+
+text
+http://localhost:8080
+
+
+
+📂 Endpoints
+Método	Endpoint	Descrição
+GET	/users	Lista usuários
+POST	/users	Cria usuário
+GET	/products	Lista produtos
+GET	/categories	Lista categorias
+GET	/orders	Lista pedidos
+
+
+👨‍💻 Autor
+Diogo Pincetta
+
+🔗 GitHub: diogo46464
+
 ---
 
 ## ✅ **Como adicionar ao GitHub:**
